@@ -1,0 +1,15 @@
+grant codebase "file:/home/kuti/apps/apache-river-2.1.1/lib/browser.jar" {
+    permission java.security.AllPermission;
+};
+
+grant codebase "file:/home/kuti/apps/apache-river-2.1.1/lib/jsk-platform.jar" {
+    permission java.security.AllPermission;
+};
+
+grant codebase "file:/home/kuti/apps/apache-river-2.1.1/lib/jsk-lib.jar" {
+    permission java.security.AllPermission;
+};
+
+grant {
+    permission java.net.SocketPermission "*:1024-", "connect";
+};

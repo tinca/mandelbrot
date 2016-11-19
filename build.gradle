@@ -1,0 +1,34 @@
+apply plugin: 'java'
+
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://www.rio-project.org/maven2/"
+    }
+}
+
+dependencies {
+    compile('net.jini:jsk-lib:2.2.1')   // jsk-platform is dependency, just as jsk-resources (starter)
+    compile('org.apache.river:outrigger:2.2.1')
+    compile('org.rioproject:rio:4.2')
+
+    testCompile 'org.jmockit:jmockit:1.13'
+    testCompile 'org.testng:testng:6.9.9'
+    testCompile 'org.uncommons:reportng:1.1.4'
+}
+
+test {
+    useTestNG()
+
+    //makes the standard streams (err and out) visible at console when running tests
+    testLogging.showStandardStreams = true
+
+    //listening to test execution events
+    beforeTest { descriptor ->
+        logger.lifecycle("Running test: " + descriptor)
+    }
+    onOutput { descriptor, event ->
+        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
+    }
+}
