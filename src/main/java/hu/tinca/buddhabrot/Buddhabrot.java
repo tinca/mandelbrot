@@ -13,8 +13,6 @@ import java.awt.*;
  * @author Aaron Davidson <aaron@spaz.ca>
  */
 public class Buddhabrot extends JFrame {
-    // out image buffer for rendering
-//        private BufferedImage off;
 
     private Buddhabrot(final int w, final int h, final int tiles) {
         setBackground(Color.gray);
@@ -45,7 +43,9 @@ public class Buddhabrot extends JFrame {
     }
 
     public static void main(String[] a) {
-        Buddhabrot bb = new Buddhabrot(1000, 800, 1);
+        SwingUtilities.invokeLater(() -> {
+            Buddhabrot bb = new Buddhabrot(1000, 800, 1);
+        });
     }
 
 
@@ -55,13 +55,6 @@ public class Buddhabrot extends JFrame {
     public void update(Graphics g) {
         repaint();
     }
-
-    /**
-     * Just blit our image buffer to the screen
-     */
-//    public synchronized void paint(Graphics g) {
-//        g.drawImage(off, 0, 0, null);
-//    }
 
 
     ///////////////////////////////////////////////////////////

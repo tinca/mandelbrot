@@ -1,9 +1,7 @@
 package hu.tinca.mandelbrot.space;
 
-import hu.tinca.mandelbrot.ApplicationException;
 import net.jini.core.lease.Lease;
 import net.jini.core.lease.LeaseDeniedException;
-import net.jini.core.lookup.ServiceItem;
 import net.jini.core.lookup.ServiceRegistrar;
 import net.jini.core.lookup.ServiceTemplate;
 import net.jini.core.transaction.Transaction;
@@ -14,7 +12,6 @@ import net.jini.discovery.DiscoveryListener;
 import net.jini.discovery.LookupDiscovery;
 import net.jini.discovery.LookupDiscoveryManager;
 import net.jini.lease.LeaseRenewalManager;
-import net.jini.lookup.LookupCache;
 import net.jini.lookup.ServiceDiscoveryListener;
 import net.jini.lookup.ServiceDiscoveryManager;
 import net.jini.space.JavaSpace;

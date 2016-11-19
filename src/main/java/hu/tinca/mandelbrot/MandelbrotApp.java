@@ -196,12 +196,7 @@ public class MandelbrotApp extends JFrame {
     }
 
     public static void main(String[] a) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new MandelbrotApp(1400, 900);
-            }
-        });
+        SwingUtilities.invokeLater(() -> new MandelbrotApp(1400, 900));
     }
 
     private enum PreSet  {

@@ -25,9 +25,9 @@ import java.util.logging.Logger;
  */
 public class SpaceCalculator implements Calculator {
     private static final Logger logger = Logger.getLogger(SpaceCalculator.class.getName());
-    Slicer slicer;
-    Viewer viewer;
-    JsHelper jsHelper;
+    private Slicer slicer;
+    private Viewer viewer;
+    private JsHelper jsHelper;
 
     public SpaceCalculator(Viewer v, int parts, ServiceDiscoveryListener l) {
         slicer = new Slicer(v.getWidth(), parts);
@@ -55,28 +55,30 @@ public class SpaceCalculator implements Calculator {
                 // avoid partial task distribution, use transaction
                 space.write(task, txn, Lease.FOREVER);
             }
+
             txn.commit();
             // get the fruits
             collectResult(space);
         }
-        catch (Exception e) {
+        catch (Throwable t) {
             // normally a retry policy is need, but it's OK now
-            logger.log(Level.SEVERE, "", e);
+            logger.log(Level.SEVERE, "", t);
             try {
-                txn.abort();
+                if (txn != null) {
+                    txn.abort();
+                }
             }
-            catch (Exception e1) {
-                logger.log(Level.SEVERE, "txn abort", e1);
+            catch (Throwable t2) {
+                logger.log(Level.SEVERE, "txn abort", t2);
             }
         }
     }
 
 
     private void collectResult(JavaSpace space) throws RemoteException, TransactionException, UnusableEntryException, InterruptedException {
-        // TODO: why snapshot?
-        Entry snapshot = space.snapshot(new ResultEntry());
+        Entry template = new ResultEntry();
         ResultEntry res;
-        while ((res = (ResultEntry) space.take(snapshot, null, 5000)) != null) {
+        while ((res = (ResultEntry) space.take(template, null, 5000)) != null) {
             logger.info("Got result of part " + res.part);
             // do not care order, but need to know which task
             viewer.update(slicer.getSlice(res.part), res.rgb);
